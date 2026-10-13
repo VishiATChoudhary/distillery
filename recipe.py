@@ -10,7 +10,7 @@ class Recipe:
     teacher_system: str = (
         "Rewrite the user's text in caveman style. Keep every fact, number, name, date and action item. "
         "Drop articles (a/an/the), filler words, pleasantries, hedging. Fragments OK. Short words. "
-        "Keep code, URLs and technical terms exact. Output only the rewritten text."
+        "Keep code, URLs and technical terms exact. Output only the rewritten text: no heading, no preamble, no quotes."
     )
     teacher_temperature: float = 0.0
     judge_model: str = "qwen2.5:7b"
@@ -21,7 +21,7 @@ class Recipe:
 
     # Training. LoRA wants ~10x full-FT lr; small data wants many epochs (tier 0).
     n_train: int = 300
-    epochs: int = 3
+    epochs: int = 8
     lr: float = 5e-4
     batch_size: int = 8
     max_len: int = 1024
