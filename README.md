@@ -28,11 +28,19 @@ data/eval.txt ──> Judge.score(student vs teacher) ──> score ──> resu
 uv sync
 uv run distill.py --mock --backend local          # offline dry run, no keys, tiny model
 
-export TEACHER_API_KEY=...                         # OpenRouter by default
-export TEACHER_BASE_URL=https://openrouter.ai/api/v1   # or vLLM / OpenAI / Ollama
+# Local teacher (Ollama) + local student (Apple GPU / CUDA). No keys, no ToS worries.
+export TEACHER_BASE_URL=http://localhost:11434/v1 TEACHER_API_KEY=ollama TEACHER_CONCURRENCY=4
+uv run synth.py --task "verbose work emails and docs" --prefix "Rewrite in caveman style: " --n 300
+uv run distill.py --backend local --note baseline
+
+# Cloud teacher + cloud GPU
+export TEACHER_API_KEY=... TEACHER_BASE_URL=https://openrouter.ai/api/v1
 uv run modal setup                                 # once
-uv run distill.py --backend modal --note baseline  # one real experiment
+uv run distill.py --backend modal --note baseline
 ```
+
+`RESEARCH.md` ranks the techniques behind the knobs in `recipe.py` (lr rule, epochs on small data,
+persona prompt synthesis, failure-refinement rounds, SDFT on-policy loss).
 
 Autonomous loop: open Claude Code here and say "read program.md and start".
 

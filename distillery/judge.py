@@ -2,10 +2,12 @@ import re
 
 
 class LLMJudge:
-    """Grades the student's answer against the teacher's reference, 0..1."""
+    """Grades the student's answer against the teacher's reference, 0..1. Reference-guided scoring
+    with an explicit "ignore length" rule: LLM judges favour longer answers (Zheng et al. 2023)."""
 
     PROMPT = (
-        "Rate how well the STUDENT answer matches the REFERENCE answer in correctness and content.\n"
+        "Rate how well the STUDENT answer matches the REFERENCE answer in correctness, content and style.\n"
+        "Ignore length: a shorter answer that says the same thing is just as good.\n"
         "Reply with a single integer from 0 to 10 and nothing else.\n\n"
         "QUESTION:\n{q}\n\nREFERENCE:\n{ref}\n\nSTUDENT:\n{ans}"
     )

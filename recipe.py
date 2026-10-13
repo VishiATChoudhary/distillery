@@ -4,20 +4,31 @@ from dataclasses import dataclass
 
 @dataclass
 class Recipe:
-    # Teacher: big model behind an API. Its answers become the training data.
-    teacher_model: str = "qwen/qwen3-235b-a22b-2507"
+    # Teacher: model behind an OpenAI-compatible API. Its answers become the training data.
+    # Small students learn better from mid-size teachers and short answers (RESEARCH.md, tier 1).
+    teacher_model: str = "qwen2.5:7b"
     teacher_system: str = "Answer correctly and concisely."
     teacher_temperature: float = 0.0
-    judge_model: str = "qwen/qwen3-235b-a22b-2507"
+    judge_model: str = "qwen2.5:7b"
 
-    # Student: small open-weights model we fine-tune with LoRA.
+    # Student: small open-weights model we fine-tune with LoRA on all linear layers.
     student_model: str = "Qwen/Qwen2.5-0.5B-Instruct"
     lora_rank: int = 16
 
-    # Training. epochs=0 gives the untrained baseline score.
-    n_train: int = 1000
-    epochs: int = 2
-    lr: float = 2e-4
+    # Training. LoRA wants ~10x full-FT lr; small data wants many epochs (tier 0).
+    n_train: int = 300
+    epochs: int = 3
+    lr: float = 5e-4
     batch_size: int = 8
     max_len: int = 1024
-    max_new_tokens: int = 384
+    max_new_tokens: int = 256
+
+    # Loss: "sft" (copy teacher text) or "sdft" (on-policy self-distillation, tier 3, ~2.5x slower).
+    loss: str = "sft"
+    sdft_mix: float = 0.5
+    sample_tokens: int = 128
+
+    # Rounds > 1: after each round the student answers the train prompts; the teacher rewrites the
+    # student's failed attempts and those replace the training targets (tier 2, personalised distillation).
+    rounds: int = 1
+    refine_threshold: float = 0.6
