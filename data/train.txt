@@ -1,0 +1,48 @@
+Explain list comprehension in one paragraph.
+What is a generator in programming?
+Explain decorator in one paragraph.
+What is a context manager in programming?
+Explain GIL in one paragraph.
+What is a asyncio event loop in programming?
+Explain dataclass in one paragraph.
+What is a type hint in programming?
+Explain lambda in one paragraph.
+What is a closure in programming?
+Explain metaclass in one paragraph.
+What is a virtual environment in programming?
+Explain pip in one paragraph.
+What is a unit test in programming?
+Explain mock object in one paragraph.
+What is a recursion in programming?
+Explain binary search in one paragraph.
+What is a hash map in programming?
+Explain linked list in one paragraph.
+What is a stack in programming?
+Explain queue in one paragraph.
+What is a heap in programming?
+Explain big O notation in one paragraph.
+What is a dynamic programming in programming?
+Explain memoization in one paragraph.
+What is a git rebase in programming?
+Explain git merge in one paragraph.
+What is a pull request in programming?
+Explain REST API in one paragraph.
+What is a HTTP status code 404 in programming?
+Explain JSON in one paragraph.
+What is a SQL join in programming?
+Explain database index in one paragraph.
+What is a transaction in programming?
+Explain race condition in one paragraph.
+What is a deadlock in programming?
+Explain mutex in one paragraph.
+What is a thread in programming?
+Explain process in one paragraph.
+What is a TCP in programming?
+Explain UDP in one paragraph.
+What is a DNS in programming?
+Explain TLS in one paragraph.
+What is a cache invalidation in programming?
+Explain load balancer in one paragraph.
+What is a Docker container in programming?
+Explain Kubernetes pod in one paragraph.
+What is a CI pipeline in programming?

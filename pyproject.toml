@@ -1,0 +1,16 @@
+[project]
+name = "distillery"
+version = "0.1.0"
+description = "Autoresearch-style loop that distills an API teacher into a small open model on rented GPUs"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx",
+    "torch",
+    "transformers",
+    "peft",
+    "accelerate",
+    "modal",
+]
+
+[tool.uv]
+package = false

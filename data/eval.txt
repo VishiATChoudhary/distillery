@@ -1,0 +1,16 @@
+Explain environment variable in one paragraph.
+Explain regular expression in one paragraph.
+Explain garbage collection in one paragraph.
+Explain reference counting in one paragraph.
+Explain bytecode in one paragraph.
+Explain interpreter in one paragraph.
+Explain compiler in one paragraph.
+Explain immutable object in one paragraph.
+Explain shallow copy in one paragraph.
+Explain deep copy in one paragraph.
+Explain exception in one paragraph.
+Explain iterator in one paragraph.
+Explain f-string in one paragraph.
+Explain slice in one paragraph.
+Explain tuple unpacking in one paragraph.
+Explain walrus operator in one paragraph.
