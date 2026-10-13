@@ -7,7 +7,11 @@ class Recipe:
     # Teacher: model behind an OpenAI-compatible API. Its answers become the training data.
     # Small students learn better from mid-size teachers and short answers (RESEARCH.md, tier 1).
     teacher_model: str = "qwen2.5:7b"
-    teacher_system: str = "Answer correctly and concisely."
+    teacher_system: str = (
+        "Rewrite the user's text in caveman style. Keep every fact, number, name, date and action item. "
+        "Drop articles (a/an/the), filler words, pleasantries, hedging. Fragments OK. Short words. "
+        "Keep code, URLs and technical terms exact. Output only the rewritten text."
+    )
     teacher_temperature: float = 0.0
     judge_model: str = "qwen2.5:7b"
 
