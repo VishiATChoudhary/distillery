@@ -1,5 +1,6 @@
 """Runs on the GPU box. Pure function in, plain dicts out, so any backend can ship it."""
 import random
+import time
 
 import torch
 import torch.nn.functional as F
@@ -92,8 +93,9 @@ class Student:
         opt = torch.optim.AdamW([p for p in self.model.parameters() if p.requires_grad], lr=lr)
         self.model.train()
         pairs, losses = list(pairs), []
-        for _ in range(epochs):
+        for epoch in range(epochs):
             random.shuffle(pairs)
+            t0, n0 = time.time(), len(losses)
             for i in range(0, len(pairs), batch_size):
                 batch = pairs[i : i + batch_size]
                 l = self._sft_loss(batch, max_len)
@@ -103,6 +105,8 @@ class Student:
                 opt.step()
                 opt.zero_grad()
                 losses.append(l.item())
+            ep = losses[n0:]
+            print(f"epoch {epoch + 1}/{epochs}: loss {sum(ep) / len(ep):.4f} ({time.time() - t0:.0f}s)", flush=True)
         return sum(losses[-10:]) / len(losses[-10:]) if losses else float("nan")
 
     @torch.no_grad()
