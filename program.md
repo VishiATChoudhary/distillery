@@ -27,8 +27,12 @@ Metric: `score` printed by `distill.py` (0..1, higher is better). Judged on `dat
 
 ## Ideas
 
-- lr (1e-4 .. 5e-4), epochs (1..5), lora_rank (8..128), batch_size
-- n_train: more teacher data usually helps the most
-- teacher_system: ask for answers the student can actually copy (shorter, structured, step by step)
-- max_len / max_new_tokens: truncation hurts long answers
-- student_model: try a bigger base only after data and hyperparameters plateau
+Read `RESEARCH.md` first. It ranks ideas by evidence. Short version:
+
+- lr: LoRA wants ~10x full-FT lr (1e-4 .. 1e-3), batch_size small (4..16)
+- epochs: small data likes many epochs (5..30); stop when train loss stops falling
+- teacher_system: short, direct answers. Small students copy short answers better than long ones
+- n_train: more diverse prompts (personas, Magpie style) beats more of the same
+- filter: drop low-quality teacher pairs, keep hard ones
+- round 2: train on prompts the student got wrong, with teacher refinements of the student's attempt
+- student_model / lora_rank: last resort after data and hyperparameters plateau
