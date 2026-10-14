@@ -23,8 +23,8 @@ class Recipe:
     n_train: int = 300
     epochs: int = 8
     lr: float = 5e-4
-    batch_size: int = 8
-    max_len: int = 1024
+    batch_size: int = 2
+    max_len: int = 512
     max_new_tokens: int = 256
 
     # Loss: "sft" (copy teacher text) or "sdft" (on-policy self-distillation, tier 3, ~2.5x slower).
