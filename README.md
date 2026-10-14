@@ -37,7 +37,7 @@ Five classes. One knob file. No training framework.
 ## Quickstart
 
 ```bash
-git clone <this repo> && cd distillery
+git clone https://github.com/VishiATChoudhary/distillery && cd distillery
 uv sync
 uv run distill.py --mock --backend local        # offline smoke test, no keys, 135M model, ~1 min
 ```
