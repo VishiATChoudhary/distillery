@@ -93,7 +93,18 @@ Teacher `qwen2.5:7b` (Ollama) rewrites verbose text in caveman style. Student `Q
 >
 > **teacher:** Hi team. Quick check on deploy talk yest. Staging still got 502 on /api/users. Think it maybe nginx change Tue. Platform team look when can. Before 3pm demo. Thanks.
 
-97 words in, 30 out, every fact kept. A 0.5B model that does this runs on a laptop at hundreds of tokens per second.
+97 words in, 30 out, every fact kept.
+
+First run, 93 synthetic training texts, 8 epochs of LoRA on a MacBook GPU, 195 seconds end to end:
+
+| | judge score (0..1) |
+|---|---|
+| Qwen2.5-0.5B-Instruct, untrained | 0.46 |
+| same model after distillery | **0.69** |
+
+> **student, unseen input:** Design team meet today. Talk user journey. Pick key areas. Make pages more relevant. Alloc tasks. Deadlines.
+
+A 0.5B model that does this runs on a laptop at hundreds of tokens per second.
 
 ## Roadmap
 
