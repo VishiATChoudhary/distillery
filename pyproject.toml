@@ -12,5 +12,9 @@ dependencies = [
     "modal",
 ]
 
+[project.optional-dependencies]
+anthropic = ["anthropic"]
+litellm = ["litellm"]
+
 [tool.uv]
 package = false

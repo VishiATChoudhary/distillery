@@ -23,7 +23,7 @@
     <text x="865" y="106">Judge</text>
   </g>
   <g fill="#d1d5db" font-size="11.5" text-anchor="middle">
-    <text x="130" y="130">any OpenAI-compatible API</text>
+    <text x="130" y="130">any LLM API</text>
     <text x="130" y="146">answers cached on disk</text>
     <text x="375" y="130">local GPU · Modal</text>
     <text x="375" y="146">one class per provider</text>

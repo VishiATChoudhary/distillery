@@ -11,7 +11,7 @@ import re
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from distillery import Teacher
+from distillery import make_teacher
 from recipe import Recipe
 
 PERSONAS = (
@@ -33,7 +33,7 @@ def main():
     ap.add_argument("--personas", type=int, default=40)
     args = ap.parse_args()
 
-    teacher = Teacher(Recipe().teacher_model, cache_dir=".cache/synth")
+    teacher = make_teacher(Recipe().teacher_model, cache_dir=".cache/synth")
     personas = [p.strip("-* ") for p in teacher.ask(PERSONAS.format(n=args.personas, task=args.task),
                                                      temperature=1.0, max_tokens=2000).splitlines() if p.strip()]
     k = -(-args.n // len(personas))

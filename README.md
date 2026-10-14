@@ -11,7 +11,7 @@
 <p align="center">
   <a href="#quickstart"><img alt="python" src="https://img.shields.io/badge/python-3.11%2B-1f2937?style=flat-square&logo=python&logoColor=white"></a>
   <img alt="backends" src="https://img.shields.io/badge/GPU-local%20%7C%20Modal-1f2937?style=flat-square">
-  <img alt="teacher" src="https://img.shields.io/badge/teacher-any%20OpenAI--compatible%20API-b3123f?style=flat-square">
+  <img alt="teacher" src="https://img.shields.io/badge/teacher-any%20LLM%20API-b3123f?style=flat-square">
   <img alt="loss" src="https://img.shields.io/badge/loss-SFT%20%7C%20SDFT-b3123f?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square">
 </p>
@@ -42,18 +42,18 @@ uv sync
 uv run distill.py --mock --backend local        # offline smoke test, no keys, 135M model, ~1 min
 ```
 
-**Local everything** (Ollama teacher, Apple GPU or CUDA student):
+**Local everything** (Ollama teacher, the recipe default; Apple GPU or CUDA student). No keys, no ToS worries:
 
 ```bash
-export TEACHER_BASE_URL=http://localhost:11434/v1 TEACHER_API_KEY=ollama TEACHER_CONCURRENCY=4
+export TEACHER_CONCURRENCY=4
 uv run synth.py --task "verbose work emails and docs" --prefix "Rewrite in caveman style: " --n 300
 uv run distill.py --backend local --note baseline
 ```
 
-**Cloud teacher, cloud GPU:**
+**Cloud teacher, cloud GPU** (set `teacher_model = "openrouter:..."`, `"anthropic:..."`, `"gemini:..."` etc. in `recipe.py`):
 
 ```bash
-export TEACHER_API_KEY=... TEACHER_BASE_URL=https://openrouter.ai/api/v1
+export OPENROUTER_API_KEY=...                    # or ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, ...
 uv run modal setup                               # once
 DISTILLERY_GPU=H100 uv run distill.py --backend modal --note baseline
 ```
@@ -65,13 +65,27 @@ It edits `recipe.py`, commits, runs, keeps the commit if the score went up and `
 
 | Piece | File | What it does |
 |---|---|---|
-| `Teacher` | `distillery/teacher.py` | Calls any OpenAI-compatible chat endpoint. Every answer cached on disk by content hash, so re-runs are free. |
+| `Teacher` | `distillery/teacher.py` | Any provider, picked by a `provider:model` string (table below). Every answer cached on disk by content hash, so re-runs are free. |
 | `Student` | `distillery/student.py` | HF model + LoRA on all linear layers. Two losses: `sft` (copy the teacher's text) and `sdft` (on-policy self-distillation, needs no teacher logits). |
 | `Backend` | `distillery/backends.py` | Where the GPU job runs. `LocalBackend`, `ModalBackend`. Adding RunPod or SkyPilot is one small class. |
 | `Judge` | `distillery/judge.py` | Reference-guided LLM scoring, 0..1, told to ignore length. `OverlapJudge` for offline runs. |
 | `Recipe` | `recipe.py` | Every knob in one dataclass. The only file the agent is allowed to edit. |
 | `synth.py` | | Persona-driven prompt generation: the teacher invents who would write such text, then writes it. |
 | `program.md` | | The agent's standing orders. |
+
+## Teachers
+
+Set `teacher_model` (and `judge_model`) in `recipe.py` to `provider:model`:
+
+| Prefix | Goes through | Key |
+|---|---|---|
+| `ollama:` `vllm:` | local OpenAI-compatible server | none |
+| `openai:` `openrouter:` `groq:` `together:` `deepseek:` `mistral:` `gemini:` | that host's OpenAI-compatible endpoint | `OPENAI_API_KEY`, `OPENROUTER_API_KEY`, ... |
+| `url:` | any `/chat/completions` at `TEACHER_BASE_URL` | `TEACHER_API_KEY` |
+| `anthropic:` | official `anthropic` SDK (`uv sync --extra anthropic`) | `ANTHROPIC_API_KEY` or `ant auth login` |
+| `litellm:` | LiteLLM, 100+ providers: Bedrock, Vertex, Azure, Cohere... (`uv sync --extra litellm`) | per LiteLLM docs |
+
+Adding a provider is one subclass with a `_complete(messages, temperature, max_tokens)` method.
 
 ## What the loop can reach for
 

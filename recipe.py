@@ -4,16 +4,17 @@ from dataclasses import dataclass
 
 @dataclass
 class Recipe:
-    # Teacher: model behind an OpenAI-compatible API. Its answers become the training data.
+    # Teacher: "provider:model". ollama:, openrouter:, openai:, anthropic:, gemini:, groq:, litellm:...
+    # (see distillery/teacher.py). Its answers become the training data.
     # Small students learn better from mid-size teachers and short answers (RESEARCH.md, tier 1).
-    teacher_model: str = "qwen2.5:7b"
+    teacher_model: str = "ollama:qwen2.5:7b"
     teacher_system: str = (
         "Rewrite the user's text in caveman style. Keep every fact, number, name, date and action item. "
         "Drop articles (a/an/the), filler words, pleasantries, hedging. Fragments OK. Short words. "
         "Keep code, URLs and technical terms exact. Output only the rewritten text: no heading, no preamble, no quotes."
     )
     teacher_temperature: float = 0.0
-    judge_model: str = "qwen2.5:7b"
+    judge_model: str = "ollama:qwen2.5:7b"
 
     # Student: small open-weights model we fine-tune with LoRA on all linear layers.
     student_model: str = "Qwen/Qwen2.5-0.5B-Instruct"

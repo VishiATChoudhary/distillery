@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, replace
 from pathlib import Path
 
-from distillery import BACKENDS, LLMJudge, MockTeacher, OverlapJudge, Teacher
+from distillery import BACKENDS, LLMJudge, MockTeacher, OverlapJudge, make_teacher
 from recipe import Recipe
 
 REFINE = (
@@ -40,8 +40,8 @@ def main():
         eval_prompts = eval_prompts[:8]
         teacher, judge = MockTeacher(), OverlapJudge()
     else:
-        teacher = Teacher(r.teacher_model, system=r.teacher_system)
-        judge = LLMJudge(Teacher(r.judge_model))
+        teacher = make_teacher(r.teacher_model, system=r.teacher_system)
+        judge = LLMJudge(make_teacher(r.judge_model))
     train_prompts = train_prompts[: r.n_train]
     pool = ThreadPoolExecutor(int(os.environ.get("TEACHER_CONCURRENCY", 16)))
 
