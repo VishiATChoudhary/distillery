@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 230" width="1000" height="230" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#b3123f"/><stop offset="1" stop-color="#ff4d7d"/></linearGradient>
+    <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#1f2937"/><stop offset="1" stop-color="#374151"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#9ca3af"/>
+    </marker>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+  </defs>
+  <rect width="1000" height="230" rx="18" fill="#0b0f16"/>
+
+  <g filter="url(#sh)">
+    <rect x="30"  y="70" width="200" height="90" rx="14" fill="url(#g1)"/>
+    <rect x="275" y="70" width="200" height="90" rx="14" fill="url(#g2)" stroke="#4b5563"/>
+    <rect x="520" y="70" width="200" height="90" rx="14" fill="url(#g2)" stroke="#4b5563"/>
+    <rect x="765" y="70" width="200" height="90" rx="14" fill="url(#g2)" stroke="#4b5563"/>
+  </g>
+
+  <g fill="#f9fafb" font-size="18" font-weight="700" text-anchor="middle">
+    <text x="130" y="106">Teacher</text>
+    <text x="375" y="106">Backend</text>
+    <text x="620" y="106">Student</text>
+    <text x="865" y="106">Judge</text>
+  </g>
+  <g fill="#d1d5db" font-size="11.5" text-anchor="middle">
+    <text x="130" y="130">any OpenAI-compatible API</text>
+    <text x="130" y="146">answers cached on disk</text>
+    <text x="375" y="130">local GPU · Modal</text>
+    <text x="375" y="146">one class per provider</text>
+    <text x="620" y="130">LoRA on all linear layers</text>
+    <text x="620" y="146">sft · sdft on-policy</text>
+    <text x="865" y="130">reference-guided LLM</text>
+    <text x="865" y="146">score 0..1 → results.tsv</text>
+  </g>
+
+  <g stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arr)">
+    <path d="M230 115 H271"/>
+    <path d="M475 115 H516"/>
+    <path d="M720 115 H761"/>
+  </g>
+  <g fill="#9ca3af" font-size="11" text-anchor="middle">
+    <text x="252" y="102">pairs</text>
+    <text x="497" y="102">job</text>
+    <text x="742" y="102">answers</text>
+  </g>
+
+  <path d="M865 160 V195 H130 V164" fill="none" stroke="#ff4d7d" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arr)"/>
+  <text x="500" y="214" fill="#ff4d7d" font-size="12" text-anchor="middle">agent edits recipe.py → commit → run → keep if score ↑, else git reset</text>
+
+  <text x="30" y="40" fill="#6b7280" font-size="12">data/train.txt · data/eval.txt</text>
+  <text x="970" y="40" fill="#6b7280" font-size="12" text-anchor="end">runs/&lt;id&gt;/ adapter</text>
+</svg>
